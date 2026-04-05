@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-wedding-blush: #FDE8E9;
+  --color-wedding-gold: #D4AF37;
+  --color-wedding-lightgold: #f3e5ab;
+  --color-wedding-beige: #FAFAF5;
+  --color-wedding-text: #3D3534;
+  --font-serif: 'Playfair Display', serif;
+  --font-sans: 'Inter', sans-serif;
+  --font-amharic: 'Nyala', 'Abyssinica SIL', sans-serif;
+  --font-cursive: 'Great Vibes', cursive;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-sparkle: sparkle 2s ease-in-out infinite;
+  
+  @keyframes float {
+    0% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+    100% { transform: translateY(0px) rotate(0deg); }
+  }
+
+  @keyframes sparkle {
+    0%, 100% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-wedding-beige);
+    color: var(--color-wedding-text);
+    font-family: var(--font-sans);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
