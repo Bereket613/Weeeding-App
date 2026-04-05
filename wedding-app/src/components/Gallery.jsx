@@ -3,12 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Expand } from 'lucide-react';
 
 import photo1 from '../assets/3Y2A9181.JPG';
-import photo2 from '../assets/photo_2026-04-05_01-59-12.jpg';
+import photo2 from '../assets/3Y2A9383.JPG';
 import photo3 from '../assets/photo_2026-04-05_02-00-48.jpg';
 import photo4 from '../assets/3Y2A9361.JPG';
 import photo5 from '../assets/3Y2A9363.JPG';
-import photo6 from '../assets/3Y2A9368.JPG';
-import photo7 from '../assets/3Y2A9375.JPG';
+import photo6 from '../assets/3Y2A9394.JPG';
+import photo7 from '../assets/3Y2A9472.JPG';
 import photo8 from '../assets/3Y2A9501 (1).JPG';
 
 const photos = [
