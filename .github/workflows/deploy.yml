@@ -39,6 +39,14 @@ jobs:
         run: npm run build
         working-directory: ./wedding-app
         
+      - name: Verify Build
+        run: |
+          if [ ! -f "./wedding-app/dist/index.html" ]; then
+            echo "Build failed: index.html not found in dist/"
+            exit 1
+          fi
+          ls -R ./wedding-app/dist/
+        
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
