@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Menu, X, Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import audioFile from '../assets/amaarenyaa_yaszarege_zafanoce_amharic_wedding_songs_tsagaayee_es.m4a';
 
 const navLinks = [
   { name: 'Home', href: '#home' },
@@ -12,21 +11,9 @@ const navLinks = [
   { name: 'RSVP', href: '#rsvp' },
 ];
 
-export default function Navigation({ forcePlayAudio, onAudioToggle }) {
+export default function Navigation({ isPlaying, toggleAudio }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(null);
-
-  // Watch for forcePlayAudio
-  useEffect(() => {
-    if (forcePlayAudio && audioRef.current && !isPlaying) {
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-      }).catch(e => console.log('Audio play failed', e));
-      if (onAudioToggle) onAudioToggle(); // consume event
-    }
-  }, [forcePlayAudio, isPlaying, onAudioToggle]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,22 +23,12 @@ export default function Navigation({ forcePlayAudio, onAudioToggle }) {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleAudio = () => {
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(e => console.log('Audio play failed', e));
-    }
-    setIsPlaying(!isPlaying);
-  };
-
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
         isScrolled ? 'bg-white/90 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-5'
       }`}
     >
-      <audio ref={audioRef} src={audioFile} loop />
       <div className="max-w-6xl mx-auto px-6 md:px-12 flex justify-between items-center">
         <a href="#home" className="text-2xl font-serif font-bold text-wedding-gold tracking-wider">
           M & Z

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-export default function EnvelopeCover({ onOpen }) {
+export default function EnvelopeCover({ onOpen, onPlayAudio }) {
   const [isAnimating, setIsAnimating] = useState(false);
 
   const handleOpen = () => {
@@ -96,7 +96,13 @@ export default function EnvelopeCover({ onOpen }) {
             transition={{ delay: 1 }}
           >
             <button
-              onClick={handleOpen}
+              onClick={() => {
+                if (onOpen) {
+                  // Audio MUST play synchronously triggered by the click event
+                  if (onPlayAudio) onPlayAudio();
+                  handleOpen();
+                }
+              }}
               className="px-8 py-3 bg-wedding-gold hover:bg-wedding-gold/80 text-white font-serif tracking-widest uppercase rounded shadow-lg transition-colors overflow-hidden relative group"
             >
               <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>

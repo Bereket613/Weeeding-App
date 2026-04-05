@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Hero from './components/Hero';
 import LoveStory from './components/LoveStory';
@@ -11,21 +11,43 @@ import Footer from './components/Footer';
 import Navigation from './components/Navigation';
 import EnvelopeCover from './components/EnvelopeCover';
 import FloatingPetals from './components/FloatingPetals';
+import audioFile from './assets/amaarenyaa_yaszarege_zafanoce_amharic_wedding_songs_tsagaayee_es.m4a';
 
 function App() {
   const [isInvitationOpened, setIsInvitationOpened] = useState(false);
-  const [shouldPlayAudio, setShouldPlayAudio] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const audioRef = useRef(null);
+
+  const handleUserClick = () => {
+    // Play immediately on user click (synchronously)
+    if (audioRef.current) {
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(e => console.log('Audio play failed', e));
+    }
+  };
 
   const handleOpenInvitation = () => {
     setIsInvitationOpened(true);
-    setShouldPlayAudio(true); // Signal to Navigation to start audio
+  };
+
+  const toggleAudio = () => {
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      audioRef.current.play().catch(e => console.log('Audio play failed', e));
+    }
+    setIsPlaying(!isPlaying);
   };
 
   return (
     <div className="bg-wedding-beige font-sans text-wedding-text overflow-x-hidden relative min-h-screen">
+      {/* Audio element remains mounted at the top level */}
+      <audio ref={audioRef} src={audioFile} loop />
+
       <AnimatePresence>
         {!isInvitationOpened && (
-          <EnvelopeCover key="envelope" onOpen={handleOpenInvitation} />
+          <EnvelopeCover key="envelope" onOpen={handleOpenInvitation} onPlayAudio={handleUserClick} />
         )}
       </AnimatePresence>
 
@@ -37,7 +59,7 @@ function App() {
           transition={{ duration: 1.5, ease: "easeInOut" }}
         >
           <FloatingPetals count={25} />
-          <Navigation forcePlayAudio={shouldPlayAudio} onAudioToggle={() => setShouldPlayAudio(false)} />
+          <Navigation isPlaying={isPlaying} toggleAudio={toggleAudio} />
           <main>
             <Hero />
             <LoveStory />
